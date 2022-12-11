@@ -121,7 +121,7 @@ fi
 
 # syseleven building block
 if [[ "${SYSELEVEN_BUILDING_BLOCK}" ]]; then
-  if [ ! -d "/dir1/" ]; then
+  if [ ! -d "${SYSELEVEN_BUILDING_BLOCK}" ]; then
     git clone --depth 1 --branch ${SYSELEVEN_BUILDING_BLOCK_VERSION} https://code.syseleven.de/syseleven/building-blocks/helmfiles/kube-prometheus-stack.git ${SYSELEVEN_BUILDING_BLOCK}
     cp -n ${SYSELEVEN_BUILDING_BLOCK}/* ./
   else
