@@ -229,6 +229,19 @@ case $phase in
       export HELMFILE_HELM3="1"
     fi
 
+    # syseleven building block
+    if [[ "${SYSELEVEN_BUILDING_BLOCK}" ]]; then
+      if [ ! -d "${SYSELEVEN_BUILDING_BLOCK}" ]; then
+        git clone --depth 1 --branch ${SYSELEVEN_BUILDING_BLOCK_VERSION} https://code.syseleven.de/syseleven/building-blocks/helmfiles/kube-prometheus-stack.git ${SYSELEVEN_BUILDING_BLOCK}
+        cp -r -n ${SYSELEVEN_BUILDING_BLOCK}/* ./
+      else
+        cd ${SYSELEVEN_BUILDING_BLOCK}
+        git checkout ${SYSELEVEN_BUILDING_BLOCK_VERSION}
+        cd ..
+        cp -r -n ${SYSELEVEN_BUILDING_BLOCK}/* ./
+      fi
+    fi
+
     if [ ! -z "${HELMFILE_INIT_SCRIPT_FILE}" ]; then
       HELMFILE_INIT_SCRIPT_FILE=$(realpath "${HELMFILE_INIT_SCRIPT_FILE}")
       bash "${HELMFILE_INIT_SCRIPT_FILE}"
@@ -281,19 +294,6 @@ case $phase in
         INTERNAL_HELM_API_VERSIONS="${INTERNAL_HELM_API_VERSIONS} --api-versions=$v"
       done
       INTERNAL_HELM_TEMPLATE_OPTIONS="${INTERNAL_HELM_TEMPLATE_OPTIONS} ${INTERNAL_HELM_API_VERSIONS}"
-    fi
-
-    # syseleven building block
-    if [[ "${SYSELEVEN_BUILDING_BLOCK}" ]]; then
-      if [ ! -d "${SYSELEVEN_BUILDING_BLOCK}" ]; then
-        git clone --depth 1 --branch ${SYSELEVEN_BUILDING_BLOCK_VERSION} https://code.syseleven.de/syseleven/building-blocks/helmfiles/kube-prometheus-stack.git ${SYSELEVEN_BUILDING_BLOCK}
-        cp -r -n ${SYSELEVEN_BUILDING_BLOCK}/* ./
-      else
-        cd ${SYSELEVEN_BUILDING_BLOCK}
-        git checkout ${SYSELEVEN_BUILDING_BLOCK_VERSION}
-        cd ..
-        cp -r -n ${SYSELEVEN_BUILDING_BLOCK}/* ./
-      fi
     fi
 
     ${helmfile} \
