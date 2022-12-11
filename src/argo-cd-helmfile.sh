@@ -12,6 +12,8 @@
 # HELMFILE_CACHE_CLEANUP - run helmfile cache cleanup on init
 # HELMFILE_USE_CONTEXT_NAMESPACE - do not set helmfile namespace to ARGOCD_APP_NAMESPACE (for multi-namespace apps)
 # HELM_DATA_HOME - perform variable expansion
+# SYSELEVEN_BUILDING_BLOCK - specify which building block to use
+# SYSELEVEN_BUILDING_BLOCK_VERSION - set building block version to use
 
 # NOTE: only 1 -f value/file/dir is used by helmfile, while you can specific -f multiple times
 # only the last one matters and all previous -f arguments are irrelevant
@@ -115,6 +117,11 @@ export HELMFILE_HELMFILE_HELMFILED="${PWD}/.__${SCRIPT_NAME}__helmfile.d"
 
 if [[ ! -d "/tmp/__${SCRIPT_NAME}__/bin" ]]; then
   mkdir -p "/tmp/__${SCRIPT_NAME}__/bin"
+fi
+
+# syseleven building block
+if [[ "${SYSELEVEN_BUILDING_BLOCK}" ]]; then
+  git clone --depth 1 --branch ${SYSELEVEN_BUILDING_BLOCK_VERSION} git@code.syseleven.de:syseleven/building-blocks/helmfiles/${SYSELEVEN_BUILDING_BLOCK}.git .
 fi
 
 # set binary paths and base options
