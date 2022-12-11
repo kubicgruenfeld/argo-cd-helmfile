@@ -120,10 +120,10 @@ if [[ ! -d "/tmp/__${SCRIPT_NAME}__/bin" ]]; then
 fi
 
 # syseleven building block
-if [[ "${SYSELEVEN_BUILDING_BLOCK}" ]]; then
-  git clone --depth 1 --branch ${SYSELEVEN_BUILDING_BLOCK_VERSION} git@code.syseleven.de:syseleven/building-blocks/helmfiles/${SYSELEVEN_BUILDING_BLOCK}.git
-  cp -n ${SYSELEVEN_BUILDING_BLOCK}/* ./
-fi
+#if [[ "${SYSELEVEN_BUILDING_BLOCK}" ]]; then
+#  git clone --depth 1 --branch ${SYSELEVEN_BUILDING_BLOCK_VERSION} git@code.syseleven.de:syseleven/building-blocks/helmfiles/${SYSELEVEN_BUILDING_BLOCK}.git
+#  cp -n ${SYSELEVEN_BUILDING_BLOCK}/* ./
+#fi
 
 # set binary paths and base options
 if [[ "${HELM_BINARY}" ]]; then
